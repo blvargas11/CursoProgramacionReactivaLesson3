@@ -1,9 +1,11 @@
 package com.cine.cinecalidad.dao;
 
+import com.cine.cinecalidad.exceptions.MovieServiceException;
 import com.cine.cinecalidad.models.Movie;
 import com.cine.cinecalidad.models.MovieRating;
 import org.json.JSONObject;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Mono;
 
 
 import javax.persistence.EntityManager;
@@ -37,6 +39,7 @@ public class MovieDaoImp implements MovieDao {
 
             JSONObject jsonMovie = new JSONObject(response.body());
             Movie movie = new Movie();
+            movie.setImdbID(jsonMovie.getString("imdbID"));
             movie.setTitle(jsonMovie.getString("Title"));
             movie.setYear(jsonMovie.getInt("Year"));
             movie.setRated(jsonMovie.getString("Rated"));
@@ -64,7 +67,7 @@ public class MovieDaoImp implements MovieDao {
             return movie;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw new MovieServiceException("Error al procesar la solicitud de la película", e);
         }
     }
 
@@ -81,6 +84,7 @@ public class MovieDaoImp implements MovieDao {
 
             JSONObject jsonMovie = new JSONObject(response.body());
             MovieRating movieRating = new MovieRating();
+            movieRating.setImdbID(jsonMovie.getString("imdbID"));
             movieRating.setTitle(jsonMovie.getString("Title"));
             movieRating.setYear(jsonMovie.getInt("Year"));
             movieRating.setRated(jsonMovie.getString("Rated"));
@@ -90,9 +94,9 @@ public class MovieDaoImp implements MovieDao {
             return movieRating;
         } catch (Exception e) {
             e.printStackTrace();
-            // Manejar errores apropiadamente
-            return null;
+            throw new MovieServiceException("Error al procesar la solicitud de la película", e);
         }
 
     }
+
 }

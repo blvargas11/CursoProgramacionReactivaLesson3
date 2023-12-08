@@ -15,8 +15,8 @@ public class Movie {
     @Id
     @Getter
     @Setter
-    @Column(name = "movieID")
-    private int movieID;
+    @Column(name = "imdbID")
+    private String imdbID;
 
     @Getter
     @Setter
@@ -107,11 +107,6 @@ public class Movie {
     @Setter
     @Column(name = "imdbVotes")
     private String imdbVotes;
-
-    @Getter
-    @Setter
-    @Column(name = "imdbID")
-    private String imdbID;
 
     @Getter
     @Setter
